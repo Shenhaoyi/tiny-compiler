@@ -4,5 +4,8 @@
   "description": "tiny compiler",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^0.34.3"
+  }
 }
