@@ -12,7 +12,8 @@ export const tokenizer = function (input: string) {
   const { length } = input
   while (current < length) {
     const char = input[current];
-    if (['(', ')'].includes(char) ) {
+    const PAREN = /(|)/;
+    if (PAREN.test(char) ) {
       tokens.push({ type: TOKEN_TYPE.PAREN, value: char })
     }
     current++;
