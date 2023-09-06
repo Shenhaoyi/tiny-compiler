@@ -28,12 +28,24 @@ export const tokenizer = function (input: string) {
     // 解析name
     const LETTERS = /[a-z]/i;
     if (LETTERS.test(char)) {
-      let name = '';
-      while (char && LETTERS.test(char)) { // 第一个条件防止undefined，undefined会被正则匹配为true
-        name += char;
+      let value = '';
+      while (current < length && LETTERS.test(char)) { // 第一个条件防止undefined，undefined会被正则匹配为true
+        value += char;
         next();
       }
-      tokens.push({ type: TOKEN_TYPE.NAME, value: name })
+      tokens.push({ type: TOKEN_TYPE.NAME, value })
+      continue;
+    }
+
+    // 解析number
+    const NUMBERS = /\d/;
+    if (NUMBERS.test(char)) {
+      let value = '';
+      while (current < length && NUMBERS.test(char)) {
+        value += char;
+        next();
+      }
+      tokens.push({ type: TOKEN_TYPE.NUMBER, value })
       continue;
     }
 

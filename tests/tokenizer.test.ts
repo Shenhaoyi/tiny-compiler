@@ -1,8 +1,8 @@
 import { test, expect } from 'vitest';
 import { tokenizer } from '../src/tokenizer';
-import { INPUT, TOKENS } from '../src/constant';
+import { INPUT, TOKENS, TOKEN_TYPE } from '../src/constant';
 
-test.skip('tokenizer', () => {
+test('tokenizer', () => {
   expect(tokenizer(INPUT)).toEqual(TOKENS);
 });
 
@@ -15,5 +15,11 @@ test('paren', () => {
 test('name', () => {
   const input = 'add subtract';
   const tokens = [TOKENS[1], TOKENS[4]];
+  expect(tokenizer(input)).toEqual(tokens);
+});
+
+test('number', () => {
+  const input = '2 4 123';
+  const tokens = [TOKENS[2], TOKENS[5], { type: TOKEN_TYPE.NUMBER, value: '123' }];
   expect(tokenizer(input)).toEqual(tokens);
 });
