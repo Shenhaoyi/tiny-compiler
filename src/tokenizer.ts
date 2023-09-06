@@ -1,7 +1,7 @@
-import { TOKEN_TYPE } from './constant';
+import { TokenType } from './constant';
 
 export interface Token {
-  type: TOKEN_TYPE,
+  type: TokenType,
   value: string
 }
 
@@ -20,7 +20,7 @@ export const tokenizer = function (input: string) {
   while (current < length) {
     // 解析圆括号
     if (/\(|\)/.test(char)) {
-      tokens.push({ type: TOKEN_TYPE.PAREN, value: char })
+      tokens.push({ type: TokenType.PAREN, value: char })
       next()
       continue;
     }
@@ -33,7 +33,7 @@ export const tokenizer = function (input: string) {
         value += char;
         next();
       }
-      tokens.push({ type: TOKEN_TYPE.NAME, value })
+      tokens.push({ type: TokenType.NAME, value })
       continue;
     }
 
@@ -45,7 +45,7 @@ export const tokenizer = function (input: string) {
         value += char;
         next();
       }
-      tokens.push({ type: TOKEN_TYPE.NUMBER, value })
+      tokens.push({ type: TokenType.NUMBER, value })
       continue;
     }
 
