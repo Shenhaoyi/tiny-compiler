@@ -11,3 +11,9 @@ test('paren', () => {
   const tokens = [TOKENS[0], TOKENS[8]];
   expect(tokenizer(input)).toEqual(tokens);
 });
+
+test('name', () => {
+  const input = 'add subtract';
+  const tokens = [TOKENS[1], TOKENS[4]];
+  expect(tokenizer(input)).toEqual(tokens);
+});
