@@ -1,27 +1,43 @@
-import { AST, NodeType } from './constant';
+import { NodeType } from './constant';
 import { RootNode, ChildNode, ExpressionNode } from './parser';
 
-export function traverser(ast: RootNode) {
-  const result = [] as any[];
-  const traverseArray = (array: ChildNode[]) => {
-    array.forEach(traverseNode)
+type VisitorFn = (node: ChildNode | RootNode, parent?: ChildNode | RootNode) => void
+interface VisitorOption {
+  enter: VisitorFn;
+  exit: VisitorFn;
+}
+
+export interface Visitor {
+  [NodeType.PROGRAM]: VisitorOption,
+  [NodeType.CALL_EXPRESSION]: VisitorOption,
+  [NodeType.NUMBER_LITERAL]: VisitorOption,
+}
+
+export function traverser(ast: RootNode, visitor: Visitor) {
+  const traverseArray = (array: ChildNode[], parent?: ChildNode | RootNode) => {
+    array.forEach((node) => {
+      traverseNode(node, parent)
+    })
   }
 
-  function traverseNode(node: ChildNode | RootNode) {
-    switch (node.type) {
+  const traverseNode = (node: ChildNode | RootNode, parent?: ChildNode | RootNode) => {
+    const { type } = node
+    switch (type) {
       case NodeType.NUMBER_LITERAL:
-        result.push(node.type)
+        visitor[type].enter(node, parent);
+        visitor[type].exit(node, parent);
         break;
       case NodeType.PROGRAM:
-        result.push(node.type)
-        traverseArray((node as RootNode).body)
+        visitor[type].enter(node);
+        traverseArray((node as RootNode).body, node)
+        visitor[type].exit(node);
         break;
       case NodeType.CALL_EXPRESSION:
-        result.push(node.type)
-        traverseArray((node as ExpressionNode).params)
+        visitor[type].enter(node, parent);
+        traverseArray((node as ExpressionNode).params, node)
+        visitor[type].exit(node, parent);
         break;
     }
   }
   traverseNode(ast);
-  return result;
 }

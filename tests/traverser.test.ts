@@ -1,9 +1,55 @@
 import { test, expect } from 'vitest';
-import { traverser } from '../src/traverser';
-import { AST } from '../src/constant';
+import { Visitor, traverser } from '../src/traverser';
+import { AST, NodeType } from '../src/constant';
 
 test('traverser', () => {
-  expect(traverser(AST)).toEqual([0, 1, 2, 1, 2, 2])
+  const callList: [string, NodeType, NodeType | ''][] = [] // 调用记录
+
+  const visitor: Visitor = {
+    Program: {
+      enter(node) {
+        callList.push(["program-enter", node.type, ""]);
+      },
+      exit(node) {
+        callList.push(["program-exit", node.type, ""]);
+      },
+    },
+
+    CallExpression: {
+      enter(node, parent) {
+        callList.push(["callExpression-enter", node.type, parent!.type]);
+      },
+      exit(node, parent) {
+        callList.push(["callExpression-exit", node.type, parent!.type]);
+      },
+    },
+
+    NumberLiteral: {
+      enter(node, parent) {
+        callList.push(["numberLiteral-enter", node.type, parent!.type]);
+      },
+      exit(node, parent) {
+        callList.push(["numberLiteral-exit", node.type, parent!.type]);
+      },
+    },
+  };
+
+  traverser(AST, visitor)
+
+  expect(callList).toEqual([
+    ["program-enter", NodeType.PROGRAM, ""],
+    ["callExpression-enter", NodeType.CALL_EXPRESSION, NodeType.PROGRAM],
+    ["numberLiteral-enter", NodeType.NUMBER_LITERAL, NodeType.CALL_EXPRESSION],
+    ["numberLiteral-exit", NodeType.NUMBER_LITERAL, NodeType.CALL_EXPRESSION],
+    ["callExpression-enter", NodeType.CALL_EXPRESSION, NodeType.CALL_EXPRESSION,],
+    ["numberLiteral-enter", NodeType.NUMBER_LITERAL, NodeType.CALL_EXPRESSION],
+    ["numberLiteral-exit", NodeType.NUMBER_LITERAL, NodeType.CALL_EXPRESSION],
+    ["numberLiteral-enter", NodeType.NUMBER_LITERAL, NodeType.CALL_EXPRESSION],
+    ["numberLiteral-exit", NodeType.NUMBER_LITERAL, NodeType.CALL_EXPRESSION],
+    ["callExpression-exit", NodeType.CALL_EXPRESSION, NodeType.CALL_EXPRESSION],
+    ["callExpression-exit", NodeType.CALL_EXPRESSION, NodeType.PROGRAM],
+    ["program-exit", NodeType.PROGRAM, ""],
+  ]);
 });
 
 

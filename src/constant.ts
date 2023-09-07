@@ -19,9 +19,9 @@ export const TOKENS = [
 ]
 
 export enum NodeType {
-  PROGRAM,
-  CALL_EXPRESSION,
-  NUMBER_LITERAL
+  PROGRAM = 'Program',
+  CALL_EXPRESSION = 'CallExpression',
+  NUMBER_LITERAL = 'NumberLiteral'
 }
 
 export const AST = {
