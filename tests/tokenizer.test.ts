@@ -1,9 +1,9 @@
 import { test, expect } from 'vitest';
 import { tokenizer } from '../src/tokenizer';
-import { INPUT, TOKENS, TokenType } from '../src/constant';
+import { SOURCE_CODE, TOKENS, TokenType } from '../src/constant';
 
 test('tokenizer', () => {
-  expect(tokenizer(INPUT)).toEqual(TOKENS);
+  expect(tokenizer(SOURCE_CODE)).toEqual(TOKENS);
 });
 
 test('paren', () => {

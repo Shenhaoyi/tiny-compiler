@@ -1,4 +1,4 @@
-export const INPUT = '(add 2 (subtract 4 2))';
+export const SOURCE_CODE = '(add 2 (subtract 4 2))';
 
 export enum TokenType {
   PAREN,
@@ -85,4 +85,4 @@ export const TRANSFORMED_AST = {
   }]
 }
 
-export const OUTPUT = 'add(2, subtract(4, 2));';
+export const TARGET_CODE = 'add(2, subtract(4, 2));';

@@ -1,7 +1,7 @@
 import { test, expect } from "vitest";
 import { compiler } from "../src/compiler";
-import { INPUT, OUTPUT } from "../src/constant";
+import { SOURCE_CODE, TARGET_CODE } from "../src/constant";
 
 test("compiler", () => {
-  expect(compiler(INPUT)).toBe(OUTPUT);
+  expect(compiler(SOURCE_CODE)).toBe(TARGET_CODE);
 });
