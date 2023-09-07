@@ -34,6 +34,7 @@ const createNumberLiteralNode = (value: string): NumberLiteralNode => ({
   value
 })
 
+// 将token列表转换为AST树
 export function parser(tokens: Token[]) {
   const { length } = tokens;
   const rootNode = createRootNode();
