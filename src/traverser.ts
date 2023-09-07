@@ -20,6 +20,7 @@ export function traverser(ast: RootNode, visitor: Visitor) {
     })
   }
 
+// 深度优先搜索遍历AST
   const traverseNode = (node: ChildNode | RootNode, parent?: ChildNode | RootNode) => {
     const { type } = node
     switch (type) {
