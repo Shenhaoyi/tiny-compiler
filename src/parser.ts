@@ -3,6 +3,7 @@ import { NodeType, TokenType } from './constant';
 
 interface Node {
   type: NodeType
+  context?: any[]
 }
 
 export type ChildNode = NumberLiteralNode | ExpressionNode

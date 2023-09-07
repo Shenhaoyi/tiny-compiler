@@ -6,7 +6,7 @@ test('traverser', () => {
   const callList: [string, NodeType, NodeType | ''][] = [] // 调用记录
 
   const visitor: Visitor = {
-    Program: {
+    [NodeType.PROGRAM]: {
       enter(node) {
         callList.push(["program-enter", node.type, ""]);
       },
@@ -15,7 +15,7 @@ test('traverser', () => {
       },
     },
 
-    CallExpression: {
+    [NodeType.CALL_EXPRESSION]: {
       enter(node, parent) {
         callList.push(["callExpression-enter", node.type, parent!.type]);
       },
@@ -24,7 +24,7 @@ test('traverser', () => {
       },
     },
 
-    NumberLiteral: {
+    [NodeType.NUMBER_LITERAL]: {
       enter(node, parent) {
         callList.push(["numberLiteral-enter", node.type, parent!.type]);
       },

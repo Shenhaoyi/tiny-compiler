@@ -45,3 +45,42 @@ export const AST = {
     }]
   }]
 }
+
+export enum TransformedNodeType {
+  PROGRAM = 'Program',
+  CALL_EXPRESSION = 'CallExpression',
+  NUMBER_LITERAL = 'NumberLiteral',
+  EXPRESSION_STATEMENT = 'ExpressionStatement',
+  IDENTIFIER = 'Identifier'
+}
+
+export const TRANSFORMED_AST = {
+  type: TransformedNodeType.PROGRAM,
+  body: [{
+    type: TransformedNodeType.EXPRESSION_STATEMENT,
+    expression: {
+      type: TransformedNodeType.CALL_EXPRESSION,
+      callee: {
+        type: TransformedNodeType.IDENTIFIER,
+        name: 'add'
+      },
+      arguments: [{
+        type: TransformedNodeType.NUMBER_LITERAL,
+        value: '2'
+      }, {
+        type: TransformedNodeType.CALL_EXPRESSION,
+        callee: {
+          type: TransformedNodeType.IDENTIFIER,
+          name: 'subtract'
+        },
+        arguments: [{
+          type: TransformedNodeType.NUMBER_LITERAL,
+          value: '4'
+        }, {
+          type: TransformedNodeType.NUMBER_LITERAL,
+          value: '2'
+        }]
+      }]
+    }
+  }]
+}
