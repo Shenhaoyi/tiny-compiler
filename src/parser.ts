@@ -16,7 +16,7 @@ const createRootNode = (): RootNode => ({
 
 interface ExpressionNode extends Node {
   name: string;
-  params: NumberLiteralNode[]
+  params: (NumberLiteralNode | ExpressionNode)[]
 }
 
 const createCallExpressionNode = (name: string): ExpressionNode => ({
@@ -47,19 +47,23 @@ export function parser(tokens: Token[]) {
   }
   next();
 
-  if (token.value === '(') {
-    next();
-    node = createCallExpressionNode(token.value);
-    node.name = token.value;
-    rootNode.body.push(node);
-    next()
-    while (current < length && token.type === TokenType.NUMBER) {
-      node.params.push(createNumberLiteralNode(token.value))
+  const parseOneLevel = (container: (ExpressionNode | NumberLiteralNode)[]) => {
+    if (token.value === '(') {
+      next();
+      node = createCallExpressionNode(token.value);
+      node.name = token.value;
+      container.push(node);
       next()
+      while (current < length && token.type === TokenType.NUMBER) {
+        node.params.push(createNumberLiteralNode(token.value))
+        next()
+      }
+      parseOneLevel(node.params)
+    } else {
+      next();
     }
   }
-  if (token.value === ')') {
-    next();
-  }
+  parseOneLevel(rootNode.body)
+
   return rootNode;
 }
