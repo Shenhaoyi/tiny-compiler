@@ -5,6 +5,8 @@ interface Node {
   type: NodeType
 }
 
+type ChildNode = NumberLiteralNode | ExpressionNode
+
 interface RootNode extends Node {
   body: ExpressionNode[]
 }
@@ -16,7 +18,7 @@ const createRootNode = (): RootNode => ({
 
 interface ExpressionNode extends Node {
   name: string;
-  params: (NumberLiteralNode | ExpressionNode)[]
+  params: ChildNode[]
 }
 
 const createCallExpressionNode = (name: string): ExpressionNode => ({
@@ -38,7 +40,7 @@ const createNumberLiteralNode = (value: string): NumberLiteralNode => ({
 export function parser(tokens: Token[]) {
   const { length } = tokens;
   const rootNode = createRootNode();
-  let node: ExpressionNode | NumberLiteralNode;
+  let node: ChildNode;
 
   let current = -1;
   let token = {} as Token;
@@ -48,7 +50,7 @@ export function parser(tokens: Token[]) {
   }
   next();
 
-  const parseOneLevel = (container: (ExpressionNode | NumberLiteralNode)[]) => {
+  const parseOneLevel = (container: (ChildNode)[]) => {
     if (token.value === '(') {
       next();
       node = createCallExpressionNode(token.value);
