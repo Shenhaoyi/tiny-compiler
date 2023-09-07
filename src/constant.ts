@@ -84,3 +84,5 @@ export const TRANSFORMED_AST = {
     }
   }]
 }
+
+export const OUTPUT = 'add(2, subtract(4, 2));';
