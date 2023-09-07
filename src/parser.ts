@@ -7,7 +7,7 @@ interface Node {
 
 type ChildNode = NumberLiteralNode | ExpressionNode
 
-interface RootNode extends Node {
+export interface RootNode extends Node {
   body: ExpressionNode[]
 }
 
@@ -66,7 +66,8 @@ export function parser(tokens: Token[]) {
       next();
     }
   }
-  parseOneLevel(rootNode.body)
-
+  while (current < tokens.length) {
+    parseOneLevel(rootNode.body)
+  }
   return rootNode;
 }
