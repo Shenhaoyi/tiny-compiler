@@ -5,7 +5,7 @@ interface Node {
   type: NodeType
 }
 
-type ChildNode = NumberLiteralNode | ExpressionNode
+export type ChildNode = NumberLiteralNode | ExpressionNode
 
 export interface RootNode extends Node {
   body: ExpressionNode[]
@@ -16,7 +16,7 @@ const createRootNode = (): RootNode => ({
   body: []
 })
 
-interface ExpressionNode extends Node {
+export interface ExpressionNode extends Node {
   name: string;
   params: ChildNode[]
 }
