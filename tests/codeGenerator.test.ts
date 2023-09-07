@@ -3,7 +3,7 @@ import { codeGenerator } from '../src/codeGenerator';
 import { TRANSFORMED_AST, TransformedNodeType } from '../src/constant';
 
 test("code generator", () => {
-  expect(codeGenerator(TRANSFORMED_AST)).toBe('"add(2, subtract(4, 2));"');
+  expect(codeGenerator(TRANSFORMED_AST)).toBe('add(2, subtract(4, 2));');
 });
 
 test("two ExpressionStatement code generator", () => {
@@ -64,6 +64,6 @@ test("two ExpressionStatement code generator", () => {
       }
     }]
   }
-  expect(codeGenerator(ast)).toBe('"add(2, subtract(4, 2)); add(1, subtract(2, 3));"');
+  expect(codeGenerator(ast)).toBe('add(2, subtract(4, 2)); add(1, subtract(2, 3));');
 });
 
