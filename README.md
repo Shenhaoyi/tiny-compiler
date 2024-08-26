@@ -1,5 +1,7 @@
 # 实现内容
-这是基于[the-super-tiny-compiler](https://github.com/jamiebuilds/the-super-tiny-compiler)实现的一个编译器。实现内容如下图所示
+参考[the-super-tiny-compiler](https://github.com/jamiebuilds/the-super-tiny-compiler)实现了一个编译器。
+
+实现内容如下图所示
 
 ![Alt text](image.png)
 
